@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.cabeca{
+    background-color: #00b7ff;
+    color: white;
+    padding: 40px 0;
+    text-align: center;
+}
+.cabeca img{
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+.cabeca h1{
+    font-size: 50px;
+}
+/**/
+.ranking{
+    margin: 50px auto;
+    width: 60%;
+}
+@media screen and (max-width: 800px) {
+    .ranking {
+        margin: 20px auto;
+        width: 90%; /* Ocupa toda a largura */
+    }
+}
+
+.ranking table {
+    border-collapse: collapse; /* Para juntar as bordas */
+    width: 100%; /* Ocupa toda a largura disponível */
+    border: 1px solid #00b7ff; /* Borda geral */
+}
+
+.ranking th, .ranking td {
+    border: 1px solid #0000005e; /* Bordas para células */
+    padding: 8px; /* Espaço interno */
+    text-align: left; /* Alinha o texto à esquerda */
+}
+
+.ranking th {
+    background-color: #f2f2f2; /* Fundo diferente para o cabeçalho */
+    font-weight: bold; /* Negrito no cabeçalho */
+}
+
+/**/

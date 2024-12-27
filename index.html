@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Raking horacio-ptyton</title>
+</head>
+
+<body>
+    <div class="cabeca">
+        <img src="logo12.png" alt="Logo Python">
+        <h1>Horacio-Python</h1>
+        <p>
+            lista de actividade e raking da comunidade python
+        </p>
+    </div>
+    <div class="ranking">
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tarefas</th>
+                    <th>Pontos</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-tbody">
+                <!--novos dados-->
+            </tbody>
+        </table>
+    </div>
+    <script>
+        // Função para preencher a tabela
+        function preencherTabela(dados) {
+            const tbody = document.getElementById('ranking-tbody'); // Acessa o tbody
+
+            // Limpa a tabela antes de adicionar novos dados
+            tbody.innerHTML = '';
+
+            // Ordena os dados por pontos de forma crescente
+            dados.sort((b, a) => a.pontos - b.pontos);
+
+            // Itera sobre os dados e preenche as células
+            dados.forEach(item => {
+                // Cria uma nova linha para cada item
+                const tr = document.createElement('tr');
+
+                // Cria as células da tabela
+                const tdNome = document.createElement('td');
+                tdNome.textContent = item.nome; // Adiciona o nome
+
+                const tdTarefas = document.createElement('td');
+                tdTarefas.textContent = item.tarefas; // Adiciona o número de tarefas
+
+                const tdPontos = document.createElement('td');
+                tdPontos.textContent = item.pontos; // Adiciona os pontos
+
+                // Adiciona as células à linha
+                tr.appendChild(tdNome);
+                tr.appendChild(tdTarefas);
+                tr.appendChild(tdPontos);
+
+                // Adiciona a linha ao corpo da tabela
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Função para buscar os dados da API
+        function buscarDados() {
+            fetch('https://horaciomanuel26.github.io/_service/raking.json')
+                .then(response => response.json())  // Converte a resposta para JSON
+                .then(data => {
+                    console.log(data); // Verifique o que está sendo retornado
+                    // Agora acessa a chave "horacio_python_raking" do objeto
+                    if (data && Array.isArray(data.horacio_python_raking)) {
+                        preencherTabela(data.horacio_python_raking);  // Preenche a tabela com os dados
+                    } else {
+                        console.error('Dados inválidos:', data);
+                    }
+                })
+                .catch(error => console.error('Erro ao buscar dados:', error)); // Tratamento de erro
+        }
+
+        // Chama a função para buscar os dados assim que a página carregar
+        window.onload = buscarDados;
+
+    </script>
+</body>
+
+</html>
