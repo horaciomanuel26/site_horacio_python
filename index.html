@@ -67,20 +67,24 @@
         }
 
         // Função para buscar os dados da API
+        // Função para buscar os dados da API
         function buscarDados() {
             fetch('https://horaciomanuel26.github.io/_service/raking.json')
                 .then(response => response.json())  // Converte a resposta para JSON
                 .then(data => {
-                    console.log(data); // Verifique o que está sendo retornado
-                    // Agora acessa a chave "horacio_python_raking" do objeto
+                    console.log(data); // Verifique a resposta completa da API
+                    // Valida se os dados existem e são um array
                     if (data && Array.isArray(data.horacio_python_raking)) {
                         preencherTabela(data.horacio_python_raking);  // Preenche a tabela com os dados
                     } else {
-                        console.error('Dados inválidos:', data);
+                        console.error('Dados inválidos:', data); // Exibe erro caso a estrutura não seja a esperada
                     }
                 })
-                .catch(error => console.error('Erro ao buscar dados:', error)); // Tratamento de erro
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error); // Exibe erro se a requisição falhar
+                });
         }
+
 
         // Chama a função para buscar os dados assim que a página carregar
         window.onload = buscarDados;
