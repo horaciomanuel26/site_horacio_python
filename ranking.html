@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ranking - Horacio-Python</title>
+    <style>
+        :root {
+            --python-blue: #306998;
+            --python-yellow: #FFE873;
+            --python-dark: #1B365D;
+            --python-light: #4B8BBE;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .menu {
+            background-color: var(--python-dark);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .menu a:hover {
+            background-color: var(--python-blue);
+            color: var(--python-yellow);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cabeca {
+            background: linear-gradient(135deg, var(--python-blue), var(--python-dark));
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+
+        .cabeca img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            border: 5px solid var(--python-yellow);
+            box-shadow: 0 0 20px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .cabeca img:hover {
+            transform: scale(1.05);
+        }
+
+        .cabeca h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .cabeca p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .ranking {
+            margin: 50px auto;
+            width: 80%;
+            max-width: 1000px;
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .ranking h2 {
+            color: var(--python-dark);
+            margin-bottom: 20px;
+            font-size: 1.8rem;
+        }
+
+        .ranking table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .ranking th {
+            background-color: var(--python-blue);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 1.1rem;
+        }
+
+        .ranking td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 1.05rem;
+        }
+
+        .ranking tbody tr:hover {
+            background-color: #f8f9fa;
+            transition: background-color 0.3s ease;
+        }
+
+        .ranking tbody tr:nth-child(1) {
+            background-color: rgba(255, 232, 115, 0.2);
+            font-weight: bold;
+        }
+
+        .ranking tbody tr:nth-child(2) {
+            background-color: rgba(255, 232, 115, 0.1);
+        }
+
+        .ranking tbody tr:nth-child(3) {
+            background-color: rgba(255, 232, 115, 0.05);
+        }
+
+        .loading {
+            text-align: center;
+            padding: 30px;
+            color: var(--python-blue);
+            font-size: 1.1rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: var(--python-light);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            font-size: 1rem;
+            opacity: 0.9;
+        }
+
+        @media screen and (max-width: 800px) {
+            .menu-items {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: var(--python-dark);
+                flex-direction: column;
+                padding: 10px 0;
+            }
+
+            .menu-items.active {
+                display: flex;
+            }
+
+            .menu-items a {
+                padding: 15px 20px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .menu-container {
+                flex-wrap: wrap;
+            }
+
+            .ranking {
+                width: 95%;
+                padding: 15px;
+            }
+
+            .cabeca h1 {
+                font-size: 2rem;
+            }
+
+            .ranking th, .ranking td {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .stat-card h3 {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-container">
+            <div class="menu-logo">
+                <a href="/index.html" style="font-weight: bold;">Horacio-Python</a>
+            </div>
+            <button class="menu-toggle">☰</button>
+            <div class="menu-items">
+                <a href="/index.html">Início</a>
+                <a href="/ranking.html">Ranking</a>
+                <a href="/desafios.html">Desafios</a>
+                <a href="/sobre.html">Sobre</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="cabeca">
+        <img src="logo12.png" alt="Logo Python">
+        <h1>Ranking da Comunidade</h1>
+        <p>Acompanhe o desempenho dos membros da nossa comunidade e veja quem está liderando o ranking de pontos</p>
+    </div>
+    
+    <div class="ranking">
+        <div class="stats" id="stats-container">
+            <!-- Estatísticas serão inseridas aqui -->
+        </div>
+        
+        <h2>Classificação Geral</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Tarefas</th>
+                    <th>Pontos</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-tbody">
+                <!-- dados serão inseridos aqui -->
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.menu-items').classList.toggle('active');
+        });
+
+        function atualizarEstatisticas(dados) {
+            const stats = document.getElementById('stats-container');
+            
+            const totalParticipantes = dados.length;
+            const totalTarefas = dados.reduce((acc, curr) => acc + curr.tarefas, 0);
+            const totalPontos = dados.reduce((acc, curr) => acc + curr.pontos, 0);
+            
+            stats.innerHTML = `
+                <div class="stat-card">
+                    <h3>${totalParticipantes}</h3>
+                    <p>Participantes</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalTarefas}</h3>
+                    <p>Tarefas Completadas</p>
+                </div>
+                <div class="stat-card">
+                    <h3>${totalPontos}</h3>
+                    <p>Pontos Totais</p>
+                </div>
+            `;
+        }
+
+        function preencherTabela(dados) {
+            const tbody = document.getElementById('ranking-tbody');
+            tbody.innerHTML = '';
+
+            dados.sort((b, a) => a.pontos - b.pontos);
+
+            dados.forEach((item, index) => {
+                const tr = document.createElement('tr');
+                
+                const tdNome = document.createElement('td');
+                tdNome.textContent = item.nome;
+
+                const tdTarefas = document.createElement('td');
+                tdTarefas.textContent = item.tarefas;
+
+                const tdPontos = document.createElement('td');
+                tdPontos.textContent = item.pontos;
+
+                tr.appendChild(tdNome);
+                tr.appendChild(tdTarefas);
+                tr.appendChild(tdPontos);
+                
+                tbody.appendChild(tr);
+            });
+
+            atualizarEstatisticas(dados);
+        }
+
+        function buscarDados() {
+            const tbody = document.getElementById('ranking-tbody');
+            tbody.innerHTML = '<tr><td colspan="3" class="loading">Carregando dados...</td></tr>';
+
+            fetch('https://horaciomanuel26.github.io/_service/raking.json')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && Array.isArray(data.horacio_python_raking)) {
+                        preencherTabela(data.horacio_python_raking);
+                    } else {
+                        tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: red;">Erro ao carregar dados</td></tr>';
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao buscar dados:', error);
+                    tbody.innerHTML = '<tr><td colspan="3" style="text-align: center; color: red;">Erro ao carregar dados</td></tr>';
+                });
+        }
+
+        window.onload = buscarDados;
+    </script>
+</body>
+</html>

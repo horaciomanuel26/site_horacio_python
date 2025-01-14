@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sobre - Horacio-Python</title>
+    <style>
+        :root {
+            --python-blue: #306998;
+            --python-yellow: #FFE873;
+            --python-dark: #1B365D;
+            --python-light: #4B8BBE;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: #f5f5f5;
+        }
+
+        .menu {
+            background-color: var(--python-dark);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .menu-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .menu-items {
+            display: flex;
+            gap: 20px;
+        }
+
+        .menu a {
+            color: white;
+            text-decoration: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .menu a:hover {
+            background-color: var(--python-blue);
+            color: var(--python-yellow);
+        }
+
+        .menu-toggle {
+            display: none;
+            color: white;
+            font-size: 24px;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .about {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            color: var(--python-dark);
+        }
+
+        .about h1 {
+            font-size: 3rem;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        .about img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        @media screen and (max-width: 800px) {
+            .menu-items {
+                display: none;
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                background-color: var(--python-dark);
+                flex-direction: column;
+                padding: 10px 0;
+            }
+
+            .menu-items.active {
+                display: flex;
+            }
+
+            .menu-items a {
+                padding: 15px 20px;
+                width: 100%;
+                text-align: center;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .about h1 {
+                font-size: 2.5rem;
+            }
+
+            .about p {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav class="menu">
+        <div class="menu-container">
+            <div class="menu-logo">
+                <a href="#" style="font-weight: bold;">Horacio-Python</a>
+            </div>
+            <button class="menu-toggle">☰</button>
+            <div class="menu-items">
+                <a href="/index.html">Início</a>
+                <a href="/ranking.html">Ranking</a>
+                <a href="/desafios.html">Desafios</a>
+                <a href="/sobre.html">Sobre</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="about">
+        <h1>Sobre Nós</h1>
+        <p>O Horacio-Python é uma plataforma dedicada ao aprendizado e desenvolvimento na linguagem de programação Python. Nosso objetivo é criar uma comunidade ativa onde desenvolvedores de todos os níveis possam aprimorar suas habilidades, compartilhar conhecimentos e crescer juntos.</p>
+        <img src="sobre-image.jpg" alt="Imagem ilustrativa sobre Python">
+        <p>Oferecemos desafios semanais, rankings para acompanhar o desempenho e a oportunidade de aprender na prática por meio de projetos reais. Acreditamos que a melhor maneira de aprender programação é colocando as mãos na massa, enfrentando desafios e recebendo feedback da comunidade.</p>
+        <p>Se você está começando sua jornada em Python ou é um desenvolvedor experiente em busca de novos desafios, o Horacio-Python tem algo a oferecer. Junte-se a nós e faça parte de uma comunidade que valoriza o aprendizado contínuo e a colaboração.</p>
+    </section>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.menu-items').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>
