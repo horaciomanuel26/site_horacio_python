@@ -68,42 +68,6 @@
             cursor: pointer;
         }
 
-        .cabeca {
-            background: linear-gradient(135deg, var(--python-blue), var(--python-dark));
-            color: white;
-            padding: 40px 0;
-            text-align: center;
-            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
-        }
-
-        .cabeca img {
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            margin-bottom: 20px;
-            border: 5px solid var(--python-yellow);
-            box-shadow: 0 0 20px rgba(0,0,0,0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .cabeca img:hover {
-            transform: scale(1.05);
-        }
-
-        .cabeca h1 {
-            font-size: 3rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
-        }
-
-        .cabeca p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
         .challenges {
             padding: 60px 20px;
             max-width: 1200px;
@@ -114,53 +78,32 @@
             font-size: 3rem;
             text-align: center;
             margin-bottom: 20px;
-        }
-
-        .challenges-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
+            color: #1B365D;
         }
 
         .challenge {
+            margin-bottom: 20px;
+        }
+
+        details {
             background: white;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
             padding: 20px;
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
-        .challenge:hover {
-            transform: translateY(-5px);
-        }
-
-        .challenge h2 {
+        details summary {
             font-size: 1.5rem;
             color: var(--python-blue);
             margin-bottom: 10px;
         }
 
-        .challenge p {
+        details p {
+            margin-top: 10px;
             font-size: 1rem;
             line-height: 1.6;
-        }
-
-        .challenge .more-info {
-            display: none;
-            margin-top: 15px;
-            font-size: 0.9rem;
-            background-color: #f9f9f9;
-            padding: 10px;
-            border-radius: 8px;
-            border-left: 4px solid var(--python-blue);
-        }
-
-        .show-more {
-            color: var(--python-blue);
-            cursor: pointer;
-            margin-top: 10px;
-            display: inline-block;
-            font-size: 0.9rem;
         }
 
         @media screen and (max-width: 800px) {
@@ -188,28 +131,6 @@
             .menu-toggle {
                 display: block;
             }
-
-            .menu-container {
-                flex-wrap: wrap;
-            }
-
-            .ranking {
-                width: 95%;
-                padding: 15px;
-            }
-
-            .cabeca h1 {
-                font-size: 2rem;
-            }
-
-            .ranking th, .ranking td {
-                padding: 10px;
-                font-size: 0.9rem;
-            }
-
-            .stat-card h3 {
-                font-size: 1.5rem;
-            }
         }
     </style>
 </head>
@@ -224,6 +145,7 @@
                 <a href="/ranking.html">Ranking</a>
                 <a href="/desafios.html">Desafios</a>
                 <a href="/sobre.html">Sobre</a>
+                <a href="/code.html">Code</a>
             </div>
             <button class="menu-toggle" onclick="toggleMenu()">☰</button>
         </div>
@@ -231,8 +153,8 @@
 
     <section class="challenges">
         <h1 id="challenges">Desafios Disponíveis</h1>
-        <div class="challenges-list" id="challenges-container">
-            <!-- Desafios serão carregados aqui pela API -->
+        <div id="challenges-container">
+            <!-- Os desafios serão carregados aqui -->
         </div>
     </section>
 
@@ -244,7 +166,7 @@
 
         async function fetchChallenges() {
             try {
-                const response = await fetch('https://horaciomanuel26.github.io/_service/desafios.json'); // Use o caminho correto
+                const response = await fetch('https://horaciomanuel26.github.io/_service/desafios.json');
                 if (!response.ok) {
                     throw new Error('Erro ao buscar os desafios');
                 }
@@ -253,35 +175,19 @@
                 const container = document.getElementById('challenges-container');
 
                 challenges.forEach(challenge => {
-                    const challengeElement = document.createElement('div');
-                    challengeElement.classList.add('challenge');
-                    challengeElement.innerHTML = `
-                        <h2>${challenge.titulo}</h2>
+                    const detailsElement = document.createElement('details');
+                    detailsElement.classList.add('challenge');
+                    detailsElement.innerHTML = `
+                        <summary>${challenge.titulo}</summary>
                         <p>${challenge.descricao}</p>
-                        <div class="more-info" id="info-${challenge.id}">
-                            <p>${challenge.conteudo}</p>
-                        </div>
-                        <span class="show-more" onclick="toggleMoreInfo(${challenge.id})">Mostrar mais</span>
+                        <p>${challenge.conteudo}</p>
                     `;
-                    container.appendChild(challengeElement);
+                    container.appendChild(detailsElement);
                 });
             } catch (error) {
                 console.error('Erro ao carregar desafios:', error);
                 const container = document.getElementById('challenges-container');
                 container.innerHTML = '<p>Não foi possível carregar os desafios. Tente novamente mais tarde.</p>';
-            }
-        }
-
-        function toggleMoreInfo(id) {
-            const infoElement = document.getElementById(`info-${id}`);
-            const showMoreButton = infoElement.nextElementSibling;
-
-            if (infoElement.style.display === 'none' || !infoElement.style.display) {
-                infoElement.style.display = 'block';
-                showMoreButton.textContent = 'Mostrar menos';
-            } else {
-                infoElement.style.display = 'none';
-                showMoreButton.textContent = 'Mostrar mais';
             }
         }
 
